@@ -1,6 +1,6 @@
 Name:               lattices
-Version:            1.2.1
-Cabal-Version:      >= 1.2
+Version:            1.3.0
+Cabal-Version:      >= 1.10
 Category:           Math
 Synopsis:           Fine-grained library for constructing and manipulating lattices
 License:            BSD3
@@ -10,12 +10,15 @@ Maintainer:         Max Bolingbroke <batterseapower@hotmail.com>
 Build-Type:         Simple
 
 Library
-        Exposed-Modules: Algebra.Enumerable,
-                         Algebra.Lattice,
-                         Algebra.Lattice.Dropped,
-                         Algebra.Lattice.Levitated,
-                         Algebra.Lattice.Lifted,
-                         Algebra.PartialOrd
+        Exposed-Modules:  Algebra.Enumerable,
+                          Algebra.Lattice,
+                          Algebra.Lattice.Dropped,
+                          Algebra.Lattice.Levitated,
+                          Algebra.Lattice.Lifted,
+                          Algebra.PartialOrd
 
-        Build-Depends:   base >= 3 && < 5,
-                         containers >= 0.3 && < 0.6
+        Other-Extensions: FlexibleInstances,
+                          ConstraintKinds
+
+        Build-Depends:    base >= 3 && < 5,
+                          containers >= 0.3 && < 0.6

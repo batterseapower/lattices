@@ -23,12 +23,8 @@ instance MeetSemiLattice a => MeetSemiLattice (Lifted a) where
     Bottom `meet` _      = Bottom
     _      `meet` Bottom = Bottom
 
-instance Lattice a => Lattice (Lifted a) where
-
 instance JoinSemiLattice a => BoundedJoinSemiLattice (Lifted a) where
     bottom = Bottom
 
 instance BoundedMeetSemiLattice a => BoundedMeetSemiLattice (Lifted a) where
     top = Lift top
-
-instance BoundedLattice a => BoundedLattice (Lifted a) where

@@ -1,4 +1,4 @@
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FlexibleInstances, ConstraintKinds #-}
 module Algebra.Lattice (
     -- * Unbounded lattices
     JoinSemiLattice(..), MeetSemiLattice(..), Lattice,
@@ -58,7 +58,7 @@ meets1 = foldr1 meet
 -- see <http://en.wikipedia.org/wiki/Absorption_law> and <http://en.wikipedia.org/wiki/Lattice_(order)>
 --
 -- Absorption: a `join` (a `meet` b) == a `meet` (a `join` b) == a
-class (JoinSemiLattice a, MeetSemiLattice a) => Lattice a where
+type Lattice a = (JoinSemiLattice a, MeetSemiLattice a)
 
 -- | A join-semilattice with some element |bottom| that `join` approaches.
 --
@@ -82,7 +82,7 @@ meets = foldr meet top
 
 
 -- | Lattices with both bounds
-class (Lattice a, BoundedJoinSemiLattice a, BoundedMeetSemiLattice a) => BoundedLattice a where
+type BoundedLattice a = (Lattice a, BoundedJoinSemiLattice a, BoundedMeetSemiLattice a)
 
 
 --
@@ -95,15 +95,11 @@ instance Ord a => JoinSemiLattice (S.Set a) where
 instance (Ord a, Enumerable a) => MeetSemiLattice (S.Set (Enumerated a)) where
     meet = S.intersection
 
-instance (Ord a, Enumerable a) => Lattice (S.Set (Enumerated a)) where
-
 instance Ord a => BoundedJoinSemiLattice (S.Set a) where
     bottom = S.empty
 
 instance (Ord a, Enumerable a) => BoundedMeetSemiLattice (S.Set (Enumerated a)) where
     top = S.fromList universe
-
-instance (Ord a, Enumerable a) => BoundedLattice (S.Set (Enumerated a)) where
 
 --
 -- IntSets
@@ -125,15 +121,11 @@ instance (Ord k, JoinSemiLattice v) => JoinSemiLattice (M.Map k v) where
 instance (Ord k, Enumerable k, MeetSemiLattice v) => MeetSemiLattice (M.Map (Enumerated k) v) where
     meet = M.intersectionWith meet
 
-instance (Ord k, Enumerable k, Lattice v) => Lattice (M.Map (Enumerated k) v) where
-
 instance (Ord k, JoinSemiLattice v) => BoundedJoinSemiLattice (M.Map k v) where
     bottom = M.empty
 
 instance (Ord k, Enumerable k, BoundedMeetSemiLattice v) => BoundedMeetSemiLattice (M.Map (Enumerated k) v) where
     top = M.fromList (universe `zip` repeat top)
-
-instance (Ord k, Enumerable k, BoundedLattice v) => BoundedLattice (M.Map (Enumerated k) v) where
 
 --
 -- IntMaps
@@ -155,15 +147,11 @@ instance JoinSemiLattice v => JoinSemiLattice (k -> v) where
 instance MeetSemiLattice v => MeetSemiLattice (k -> v) where
     f `meet` g = \x -> f x `meet` g x
 
-instance Lattice v => Lattice (k -> v) where
-
 instance BoundedJoinSemiLattice v => BoundedJoinSemiLattice (k -> v) where
     bottom = const bottom
 
 instance BoundedMeetSemiLattice v => BoundedMeetSemiLattice (k -> v) where
     top = const top
-
-instance BoundedLattice v => BoundedLattice (k -> v) where
 
 --
 -- Tuples
@@ -175,15 +163,11 @@ instance (JoinSemiLattice a, JoinSemiLattice b) => JoinSemiLattice (a, b) where
 instance (MeetSemiLattice a, MeetSemiLattice b) => MeetSemiLattice (a, b) where
     (x1, y1) `meet` (x2, y2) = (x1 `meet` x2, y1 `meet` y2)
 
-instance (Lattice a, Lattice b) => Lattice (a, b) where
-
 instance (BoundedJoinSemiLattice a, BoundedJoinSemiLattice b) => BoundedJoinSemiLattice (a, b) where
     bottom = (bottom, bottom)
 
 instance (BoundedMeetSemiLattice a, BoundedMeetSemiLattice b) => BoundedMeetSemiLattice (a, b) where
     top = (top, top)
-
-instance (BoundedLattice a, BoundedLattice b) => BoundedLattice (a, b) where
 
 --
 -- Bools
@@ -195,16 +179,11 @@ instance JoinSemiLattice Bool where
 instance MeetSemiLattice Bool where
     meet = (&&)
 
-instance Lattice Bool where
-
 instance BoundedJoinSemiLattice Bool where
     bottom = False
 
 instance BoundedMeetSemiLattice Bool where
     top = True
-
-instance BoundedLattice Bool where
-
 
 -- | Implementation of Kleene fixed-point theorem <http://en.wikipedia.org/wiki/Kleene_fixed-point_theorem>.
 -- Assumes that the function is monotone and does not check if that is correct.

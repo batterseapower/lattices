@@ -23,12 +23,8 @@ instance MeetSemiLattice a => MeetSemiLattice (Dropped a) where
     drop_x `meet` Top    = drop_x
     Drop x `meet` Drop y = Drop (x `meet` y)
 
-instance Lattice a => Lattice (Dropped a) where
-
 instance BoundedJoinSemiLattice a => BoundedJoinSemiLattice (Dropped a) where
     bottom = Drop bottom
 
 instance MeetSemiLattice a => BoundedMeetSemiLattice (Dropped a) where
     top = Top
-
-instance BoundedLattice a => BoundedLattice (Dropped a) where
