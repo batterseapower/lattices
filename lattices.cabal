@@ -10,12 +10,14 @@ Maintainer:         Max Bolingbroke <batterseapower@hotmail.com>
 Build-Type:         Simple
 
 Library
-        Exposed-Modules: Algebra.Enumerable,
-                         Algebra.Lattice,
-                         Algebra.Lattice.Dropped,
-                         Algebra.Lattice.Levitated,
-                         Algebra.Lattice.Lifted,
-                         Algebra.PartialOrd
+        Exposed-Modules:  Algebra.Enumerable,
+                          Algebra.Lattice,
+                          Algebra.Lattice.Dropped,
+                          Algebra.Lattice.Levitated,
+                          Algebra.Lattice.Lifted,
+                          Algebra.PartialOrd
 
-        Build-Depends:   base >= 3 && < 5,
-                         containers >= 0.3 && < 0.6
+        Other-Extensions: FlexibleInstances
+
+        Build-Depends:    base >= 3 && < 5,
+                          containers >= 0.3 && < 0.6
