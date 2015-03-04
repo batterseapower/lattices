@@ -1,6 +1,6 @@
 Name:               lattices
-Version:            1.2.1
-Cabal-Version:      >= 1.2
+Version:            1.3.0
+Cabal-Version:      >= 1.10
 Category:           Math
 Synopsis:           Fine-grained library for constructing and manipulating lattices
 License:            BSD3
@@ -17,7 +17,8 @@ Library
                           Algebra.Lattice.Lifted,
                           Algebra.PartialOrd
 
-        Other-Extensions: FlexibleInstances
+        Other-Extensions: FlexibleInstances,
+                          ConstraintKinds
 
         Build-Depends:    base >= 3 && < 5,
                           containers >= 0.3 && < 0.6
