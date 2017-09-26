@@ -20,8 +20,8 @@ module Algebra.PartialOrd (
 
 import qualified Data.IntMap as IM
 import qualified Data.IntSet as IS
-import qualified Data.Map as M
-import qualified Data.Set as S
+import qualified Data.Map    as M
+import qualified Data.Set    as S
 
 -- | A partial ordering on sets
 -- (<http://en.wikipedia.org/wiki/Partially_ordered_set>) is a set equipped
